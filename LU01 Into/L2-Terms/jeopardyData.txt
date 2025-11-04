@@ -1,0 +1,74 @@
+JEOPARDY! - AI TERMS
+
+CATEGORY: AI FUNDAMENTALS
+--------------------------------------------------------------------------------
+100: This general concept refers to machines acting in a way that simulates or mimics human intelligence.
+ANSWER: What is Artificial Intelligence?
+
+200: A set of rules that a machine can follow to learn how to do a task.
+ANSWER: What is an Algorithm?
+
+300: This term describes a machine that can perform its tasks without needing human intervention.
+ANSWER: What is Autonomous?
+
+400: This interdisciplinary field draws from statistics, computer science, and information science to solve problems involving data.
+ANSWER: What is Data Science?
+
+500: This field within artificial intelligence is primarily concerned with creating and analyzing machine learning algorithms.
+ANSWER: What is Computational Learning Theory?
+
+CATEGORY: MACHINE LEARNING CONCEPTS
+--------------------------------------------------------------------------------
+100: This subset of AI focuses on developing algorithms that help machines learn and change in response to new data, without human help.
+ANSWER: What is Machine Learning?
+
+200: A function of artificial intelligence that imitates the human brain by learning from the way data is structured, rather than from a programmed algorithm.
+ANSWER: What is Deep Learning?
+
+300: This is a type of machine learning where structured datasets, with inputs and labels, are used to train and develop an algorithm.
+ANSWER: What is Supervised Learning?
+
+400: This is a form of training where the algorithm is asked to make inferences from datasets that don’t contain labels.
+ANSWER: What is Unsupervised Learning?
+
+500: This method of teaching AI sets a goal without specific metrics, encouraging the model to test different scenarios rather than find a single answer.
+ANSWER: What is Reinforcement Learning?
+
+CATEGORY: DATA & MODELING
+--------------------------------------------------------------------------------
+100: A collection of related data points, usually with a uniform order and tags.
+ANSWER: What is a Dataset?
+
+200: This refers to all the data used during the process of training a machine learning algorithm.
+ANSWER: What is Training Data?
+
+300: The unlabeled data used to check that a machine learning model is able to perform its assigned task.
+ANSWER: What is Test Data?
+
+400: Assumptions made by a model that simplify the process of learning, which can negatively affect results if too high.
+ANSWER: What is Bias?
+
+500: An important AI term, this is a symptom of machine learning training in which an algorithm is only able to work on or identify specific examples present in the training data.
+ANSWER: What is Overfitting?
+
+CATEGORY: NATURAL LANGUAGE & VISION
+--------------------------------------------------------------------------------
+100: A program designed to communicate with people through text or voice commands in a way that mimics human conversation.
+ANSWER: What is a Chatbot?
+
+200: Commonly used in image or video tagging, this is an imaginary box drawn on visual information. The contents are labeled to help a model recognize it.
+ANSWER: What is a Bounding Box?
+
+CATEGORY: ADVANCED AI CONCEPTS
+--------------------------------------------------------------------------------
+100: This type of AI could successfully do any intellectual task that can be done by any human being.
+ANSWER: What is General AI (or Strong AI)?
+
+200: A model that has a set range of skills and focuses on one particular set of tasks, representing most AI currently in use.
+ANSWER: What is Weak AI (or Narrow AI)?
+
+300: Named after Alan Turing, this tests a machine’s ability to pass for a human, particularly in the fields of language and behavior.
+ANSWER: What is the Turing Test?
+
+400: This specialized processor is designed to accelerate artificial intelligence workloads, particularly neural networks, in devices.
+ANSWER: What is a Neural Processing Unit (NPU)?
