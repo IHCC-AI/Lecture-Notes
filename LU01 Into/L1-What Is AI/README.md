@@ -55,10 +55,4 @@ AI is not going away, and it's going to change a lot.
 Just wanted to tamper some hype.
 Now lets go so some cool stuff with AI.
 
-## Activity
 
-Set up Learning Journal.
-
-Each lecture day you will write in your Learning Journal.
-The last part of today's lecture is setting you up to write in your journal.
-You will turn this journal in each unit.
