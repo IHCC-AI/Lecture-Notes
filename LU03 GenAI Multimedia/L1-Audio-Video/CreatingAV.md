@@ -1,5 +1,7 @@
 # AI Multimedia Generation
 
+> Icebreaker: [Callers to Washington state hotline press 2 for Spanish and get accented AI English instead](https://apnews.com/article/washington-dol-spanish-accent-ai-3a1b8438a5674c07242a8d48c057d5a3)
+
 AI multimedia generation refers to creating, modify, or enhance audio and video content with AI.
 Now how much AI usage categorizes something as "AI" content.
 
@@ -68,6 +70,8 @@ Use Cases:
 - Accessibility features
 - Prototype voice-overs
 
+> Ask: What are some ethical use cases for AI TTS?
+
 ### Demo 2: Voice Cloning with FakeYou (5 minutes)
 
 **Tool:** https://fakeyou.com/
@@ -97,22 +101,22 @@ This example uses [SpeechSynthesisUtterance](https://developer.mozilla.org/en-US
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <!--Note: This does not work in Webstorm browser-->
-    <title>Browser TTS Demo</title>
-</head>
-<body>
-<label for="textInput">Enter text you want said outload</label>
-<textarea id="textInput" placeholder="Enter text here..."></textarea>
-<button onclick="speak()">Speak</button>
-<script>
-    function speak() {
-        const text = document.getElementById('textInput').value;
-        const utterance = new SpeechSynthesisUtterance(text);
-        speechSynthesis.speak(utterance);
-    }
-</script>
-</body>
+    <head>
+        <!--Note: This does not work in Webstorm browser-->
+        <title>Browser TTS Demo</title>
+    </head>
+    <body>
+        <label for="textInput">Enter text you want said outload</label>
+        <textarea id="textInput" placeholder="Enter text here..."></textarea>
+        <button onclick="speak()">Speak</button>
+        <script>
+            function speak() {
+                const text = document.getElementById('textInput').value;
+                const utterance = new SpeechSynthesisUtterance(text);
+                speechSynthesis.speak(utterance);
+            }
+        </script>
+    </body>
 </html>
 ```
 
@@ -134,8 +138,7 @@ Next time we run this class I hope this section will be a bit more fleshed out.
 
 - https://footage.com/
     - 3 Free per day. No Account Needed.
-- https://www.openshot.org/
-- https://clipchamp.com/
+- https://higgsfield.ai/ai-video
 
 ### Demo 4: Text-to-Video Generation
 

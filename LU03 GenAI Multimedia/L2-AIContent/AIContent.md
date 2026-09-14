@@ -16,6 +16,7 @@ These editing fundamentals will be essential for your upcoming AI video project.
 
 - Why Kdenlive? Free, open-source, cross-platform video editor
 - Download: [Kdenlive](https://kdenlive.org/download/)
+    - Students don't have to install, I can just demo.
 - Interface Overview: Timeline, preview window, effects panel, project bin
 
 Project Setup
@@ -57,6 +58,7 @@ Why Compress?
 ### Handbrake Compression
 
 - Download: [Handbrake](https://handbrake.fr/downloads.php)
+    - Students don't have to install, I can just demo.
 - Input: Drag Kdenlive export into Handbrake
 - Preset Selection: "Web Optimized" for most use cases
 
@@ -81,6 +83,7 @@ Pass 2: Heavy Optimization
 ## Image Editing with GIMP
 
 - Download: [GIMP](https://www.gimp.org/downloads/)
+    - Students don't have to install, I can just demo.
 - Interface: Toolbox, image window, docks (layers, history)
 - File Formats: Work in .xcf, export to .jpg/.png
 

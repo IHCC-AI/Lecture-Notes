@@ -7,18 +7,17 @@ Remember "Garbage In, Garbage Out"
 ```
 I'm a gym manager and we have a new gym schedule.
 Write an email informing our staff of the new Schedule.
-Highlight the fact the the M/W/F Cardio Blast class changed from 7:00am to 6:am.
+Highlight the fact the M/W/F Cardio Blast class changed from 7:00am to 6:am.
 Make the email professional and friendly, and short so that readers can skim it quickly.
-Here is the new schedule: 
+Here is the new schedule:
 ```
 
-I think gemini is best for this.
 Copy in this [Schedule](assets/schedule.csv) to the end of the prompt.
 After first go, iterate by changing the tone.
 
 ```
-Now write a concise, consumer-facing email with this same information. 
-Exmplain that this new schedule will help us better serve them.
+Now write a concise, consumer-facing email with this same information.
+Explain that this new schedule will help us better serve them.
 Make the tone fun, friendly.
 Include a pun about lifting weights.
 ```
@@ -29,7 +28,7 @@ Include a pun about lifting weights.
 I'm a marketer for a well-known video game producer known for creating immersive story-based online video games.
 I'm planning the launch of a new medieval fantasy roleplaying game that follows the path of a young protagonist searching for their missing partner.
 The game's is reaching the end stages of development, and I need help creating a timeline before it goes live.
-Provide a rought timeline for the year leading up to its launch.
+Provide a rough timeline for the year leading up to its launch.
 Also, provide some pre-launch ideas to help generate buzz around the game.
 ```
 
@@ -53,8 +52,8 @@ Their employee numbers are 1-10.
 Create a table that tracks weekly staffing.
 Create columns for day, name, and shift (morning or afternoon).
 - There should always be 2 employees scheduled morning and afternoon shifts
-- Employees should not be scheduled for a morning shift on the following day after they were scheduled for an afternoon shift. 
-- Shifts should be roughly equal across employees. 
+- Employees should not be scheduled for a morning shift on the following day after they were scheduled for an afternoon shift.
+- Shifts should be roughly equal across employees.
 ```
 
 > Note: Whose computer has access now to your employees schedule?
@@ -62,4 +61,4 @@ Create columns for day, name, and shift (morning or afternoon).
 
 ## In class Activity
 
-Do Messy Data Pair Programming Assignment In class. 
+Do Messy Data Pair Programming Assignment In class.

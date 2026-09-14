@@ -66,5 +66,9 @@ graph TD
 
 Use chain of density to break down the [IPCC AR6 Synthesis Report](https://www.ipcc.ch/report/ar6/syr/downloads/report/IPCC_AR6_SYR_SPM.pdf)
 
+## Markdown Fun
 
+### Markdown to PDF
+
+### Markdown to slides
 

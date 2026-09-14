@@ -1,5 +1,18 @@
 # Into to AI
 
+## Lecture Notes
+
+Before we do anything first we need to learn how to take notes.
+I remember in Middle School I was taught to take notes in History class.
+We will take notes in a different way.
+While the main goal is to take notes, the goal is also to learn how use Git.
+
+> Point students to this repo: [Learning Journal](https://github.com/IHCC-AI/Learning-Journal)
+
+Today we won't mess this Git just take notes on a **plain** text file (`.txt` or `.md`).
+
+## AI Definition
+
 Start off with a quick definition of "AI."
 [What is 'AI'?](https://www.nasa.gov/what-is-artificial-intelligence/)
 
@@ -55,4 +68,8 @@ AI is not going away, and it's going to change a lot.
 Just wanted to tamper some hype.
 Now lets go so some cool stuff with AI.
 
+## Students use LLM?
 
+Ask students in their lives when they use AI (LLMs) and when they don't.
+Without talking about ethics, when is it appropriate to use AI?
+Any cool examples of usecases of AI in their lives?

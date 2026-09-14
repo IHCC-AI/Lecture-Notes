@@ -1,5 +1,13 @@
 # Prompting
 
+## Learning Journal
+
+If students haven't already spend class time uploading their learning journals to their git repositories.
+
+Instructions: https://github.com/IHCC-AI/Learning-Journal
+
+## Prompt Engineering
+
 What is prompt engineering?
 
 - [AWS prompt engineering techniques](https://aws.amazon.com/what-is/prompt-engineering/)
@@ -8,7 +16,6 @@ What is prompt engineering?
 
 - Video About the course: https://www.youtube.com/watch?v=OQaTkeAj8UU
   Video summarizing the course: https://www.youtube.com/watch?v=0Kr1eh1wwb8
-
 
 ## Your holding it wrong
 
@@ -42,7 +49,7 @@ If things don't work out try these things to get better results.
 
 1. Revisit the prompting framework.
     - Mark up your prompt into T-C-R
-        - T: Make a schedule for Luke, Susan, James, and Jarret output a CSV.
+        - T: Make a schedule for Luke, Susan and Mitziu output a CSV.
         - C: Luke has class this class schedule...
         - R: Class schedules in the past.
 2. Separate your prompt into shorter tasks (great for coding).
@@ -69,7 +76,7 @@ The importance of specificity, context, and persona.
 ### No context
 
 ```prompt
-Make a diagram of weather cycle. 
+Make a diagram of weather cycle.
 ```
 
 ![WeatherCycle](assets/weatherCycle.png)
@@ -77,11 +84,13 @@ Make a diagram of weather cycle.
 ### With context
 
 ```prompt
-You are a 5th grade teacher and need to teach your students the weather cycle. 
-Make sure you include; Precipitation, surface runoff, groundwater, transpation (plants) / evaporation, condensation.
-Generate a age appropriate diagram of the weather cycle using mermaid diagram. 
-Output the diagram in valid text that would generate a diagram so i can edit it. 
+You are a 5th grade teacher and need to teach your students the weather cycle.
+Make sure you include; Precipitation, surface runoff, groundwater, respiration (plants) / evaporation, condensation.
+Generate a age appropriate diagram of the weather cycle using mermaid diagram.
+Output the diagram in valid text that would generate a diagram so i can edit it.
 ```
+
+Example output:
 
 ```mermaid
 graph TD
@@ -130,7 +139,7 @@ graph TD
 
 ```
 
-If the digram is wrong copy the error back into the AI. If it is correct make a new chat and break the digram and get it
+If the diagram is wrong copy the error back into the AI. If it is correct make a new chat and break the diagram and get it
 to fix it. You can't use "(" in labels if it tries to do that.
 
 The human-AI partnership: The AI is a tool, not a replacement.
@@ -139,9 +148,4 @@ The human-AI partnership: The AI is a tool, not a replacement.
 
 ## Activities
 
-1. Prompt-a-Thon: Students compete to write the most effective and creative prompts for a given topic.
-    - Come up with a new shoe brand with a line-up of shoes (Prices, type, make up etc).
-      -I want 3 different shoes 
-      - Brand name, slogan, target audience etc.
-
-2. [Say What You See](https://artsandculture.google.com/experiment/jwG3m7wQShZngw?ref=campaigntrend.com)
+[Say What You See](https://artsandculture.google.com/experiment/jwG3m7wQShZngw?ref=campaigntrend.com)

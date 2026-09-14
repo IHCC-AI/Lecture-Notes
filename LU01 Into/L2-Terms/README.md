@@ -1,8 +1,13 @@
 # Terms and Data
 
-[//]: # (ICE BREAKER: https://www.youtube.com/watch?v=ly6YKz9UfQ4)
+[//]: # 'ICE BREAKER: https://www.youtube.com/watch?v=ly6YKz9UfQ4'
 
 Terms used in the AI space and AI's data cravings
+
+## How AI Works
+
+- [Youtube: Large Language Models explained briefly](https://www.youtube.com/watch?v=LPZh9BOjkQs)
+- [Youtube: No one actually knows why AI works](https://www.youtube.com/watch?v=nMwiQE8Nsjc&t=2s)
 
 ## Terms
 
@@ -12,6 +17,10 @@ https://mitsloanedtech.mit.edu/ai/basics/glossary/
 [System Prompt](https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools/blob/main/v0%20Prompts%20and%20Tools/Prompt.txt)
 
 ## Tokens
+
+How AI works.
+Tokens are the smallest unit of text that a language model processes.
+The number of tokens in a piece of text affect how much it costs to process with an AI model, models charge based on the number of tokens they process.
 
 https://platform.openai.com/tokenizer
 
@@ -43,17 +52,6 @@ The quick brown fox jumps over the lazy dog
     ]
 }
 ```
-
-## Reasoning 
-
-
-
-
-## Data
-
-Ethical data: https://archive.ics.uci.edu/
-What most company's do: https://huggingface.co/spaces/bigcode/in-the-stack
-Stealing YouTube video transcripts: https://www.wired.com/story/youtube-training-data-apple-nvidia-anthropic/
 
 ## Activity
 

@@ -27,7 +27,7 @@ ANSWER: What is Deep Learning?
 
 300: This is a type of machine learning where structured datasets, with inputs and labels, are used to train and develop an algorithm.
 ANSWER: What is Supervised Learning?
-
+ 
 400: This is a form of training where the algorithm is asked to make inferences from datasets that don’t contain labels.
 ANSWER: What is Unsupervised Learning?
 
