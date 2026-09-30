@@ -25,6 +25,10 @@ docker run -d -p 3000:8080 \
   ghcr.io/open-webui/open-webui:main
 ```
 
+```powershell
+docker run -d -p 3000:8080 -e OLLAMA_BASE_URL=http://host.docker.internal:11434 -v open-webui:/app/backend/data --name open-webui --restart always ghcr.io/open-webui/open-webui:main
+```
+
 Now go to [http://localhost:3000](http://localhost:3000) and create an admin account.
 My "Account" is below. The account is just local and doesn't matter.
 
