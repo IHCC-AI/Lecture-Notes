@@ -109,7 +109,7 @@
             // Change Model and Ports as needed
             const OLLAMA_HOST = 'http://localhost';
             const PORT = '11434';
-            const MODEL_NAME = 'qwen3.5:2b';
+            const MODEL_NAME = 'YOUR-MODEL-NAME-HERE';
 
             const chat = document.getElementById('chat');
             const promptInput = document.getElementById('prompt');
@@ -144,6 +144,7 @@
                                 model: MODEL_NAME,
                                 prompt: text,
                                 stream: false,
+                                think: false,
                             }),
                         },
                     );

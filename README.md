@@ -29,27 +29,6 @@ git clone https://github.com/IHCC-AI/Lecture-Notes.git
 
 ## Detailed Unit and Lecture List
 
-### LU05 — Deploying AI
-
-1. Docker basics
-2. Running local models
-3. Running Front End UI for Local AI
-4. Running AI harnesses i.e. [OpenCode](https://opencode.ai/).
-
-### LU06 — Custom Models
-
-1. Data and model customization basics
-2. Fine-tuning and adaptation
-3. Evaluating custom models
-4. Choosing when to use custom models
-
-### LU07 — Automation Tools
-
-1. No-code and low-code automation ideas
-2. APIs, JSON, and data exchange
-3. n8n workflow building
-4. Human-in-the-loop review and quality control
-
 ### LU08 — Machine Learning Basics
 
 [Like Code Bullet](https://www.youtube.com/@CodeBullet)
@@ -58,6 +37,27 @@ git clone https://github.com/IHCC-AI/Lecture-Notes.git
 2. Data, labels, and training examples
 3. Training loop, loss, and model learning
 4. Accuracy, validation, and overfitting
+
+## Inspiration
+
+- [Code Bullet YouTube Channel](https://www.youtube.com/@CodeBullet)
+- [Code Bullet GitHub](https://github.com/Code-Bullet)
+
+## Tech Stack
+
+- [Node.js](https://nodejs.org/en/)
+- [p5.js](https://p5js.org/)
+- [ml5.js](https://ml5js.org/)
+- [Neataptic](https://wagenaartje.github.io/neataptic/)
+- [TensorFlow.js](https://www.tensorflow.org/js)
+
+## Homework
+
+Given a p5.js game implement Neuroevolution to train a neural network to play the game.
+Game can't be: Pong, Flappy Bird, Snake, Tetris, or Breakout.
+Game should be: Pacman
+
+
 
 ### LU09 — Machine Vision
 
@@ -69,6 +69,14 @@ git clone https://github.com/IHCC-AI/Lecture-Notes.git
 ### LU10 — AI Scripting
 
 1. Using AI to generate scripts
-2. Bash and Python automation basics
-3. CSV, JSON, and data processing tasks
+    - png to webp conversion
+    - Delete all folders in a directory in a certain name.
+    - Summarize a folder of markdown
+2. Bash scripting
+    - Creating CLI/TUI tools with AI
+    - Create a simple TUI for creating wireframes
+    - Turn markdown wireframes into HTML and CSS
+    - Create a script menu to run scripts
+3. Convert CSV to JSON, Load into Front-End Website
 4. Debugging and capstone-ready automation
+    - Give students capstone.

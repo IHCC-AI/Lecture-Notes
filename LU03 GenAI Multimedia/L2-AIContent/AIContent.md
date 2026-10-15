@@ -17,6 +17,11 @@ These editing fundamentals will be essential for your upcoming AI video project.
 - Why Kdenlive? Free, open-source, cross-platform video editor
 - Download: [Kdenlive](https://kdenlive.org/download/)
     - Students don't have to install, I can just demo.
+- Download Media
+    - Get Media from Blackboard Links or USB drive.
+    - Video: https://video.blender.org/w/dmhvQNzwBnrWy1iYzVv5g7
+    - Music: https://pixabay.com/music/
+    - Images: https://openclipart.org/detail/356770/no-smart-glasses-sign
 - Interface Overview: Timeline, preview window, effects panel, project bin
 
 Project Setup
@@ -51,6 +56,9 @@ Audio Enhancement
 
 Why Compress?
 
+- Netflix VS 4k Blue-ray
+    - Netflix: 5-15 Mbps for 1080p streaming
+    - Blu-ray: 100gb for the whole move uncompressed
 - File Size: Raw exports can be 1GB+ for short videos
 - Platform Requirements: YouTube, TikTok, Instagram have size limits
 - Loading Speed: Smaller files = better user experience
@@ -99,7 +107,7 @@ Pass 2: Heavy Optimization
 - Select by Color: Tools → Selection → By Color
 - Fuzzy Select: For complex backgrounds
 - Layer Masks: Non-destructive editing
-- Export: File → Export As → PNG (for transparency)
+- Export: File → Export As → PNG (for transparency) / Webp
 
 ### Text & Graphics Overlay
 
@@ -107,6 +115,3 @@ Pass 2: Heavy Optimization
 - Font Selection: Bold, readable fonts for video thumbnails
 - Drop Shadows: Filters → Light and Shadow → Drop Shadow
 - Color Matching: Sample colors from existing brand elements
-
-
-

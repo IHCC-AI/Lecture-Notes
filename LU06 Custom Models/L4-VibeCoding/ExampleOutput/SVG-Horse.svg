@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="coat" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7a4224" />
+      <stop offset="50%" stop-color="#4a2711" />
+      <stop offset="100%" stop-color="#1c0f06" />
+    </linearGradient>
+    <linearGradient id="mane" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a110b" />
+      <stop offset="100%" stop-color="#040201" />
+    </linearGradient>
+  </defs>
+
+  <!-- Flowing Mane -->
+  <path d="M 52,22 C 60,10 75,25 75,25 C 82,40 92,70 102,100 L 75,100 C 68,60 60,40 55,18 Z" fill="url(#mane)" />
+
+  <!-- Main Head & Neck Silhouette -->
+  <path d="M 12,62
+           C 16,58 22,55 28,55
+           C 36,55 42,42 45,32
+           C 47,26 50,22 55,22
+           L 51,7 L 59,18
+           L 66,4 L 69,22
+           C 76,32 85,55 95,100
+           L 40,100
+           C 52,85 55,75 48,65
+           C 36,58 22,64 12,62 Z"
+        fill="url(#coat)" />
+
+  <!-- Deep Shadows for Musculature -->
+  <path d="M 48,65 C 40,68 34,62 30,55 C 38,58 45,60 48,65 Z" fill="#291408" opacity="0.6" />
+  <path d="M 69,22 C 65,30 55,45 40,100 L 95,100 C 85,55 76,32 69,22 Z" fill="#1c0f06" opacity="0.3" />
+
+  <!-- Highlights for 3D Volume -->
+  <path d="M 28,55 C 35,53 42,46 45,32 C 41,43 34,51 28,55 Z" fill="#9e603a" opacity="0.5" />
+  <path d="M 12,62 C 16,58 22,55 28,55 C 22,58 17,60 12,62 Z" fill="#a8714f" opacity="0.4" />
+
+  <!-- Eye & Catchlight (Creates the lifelike gleam) -->
+  <ellipse cx="44" cy="41" rx="2.5" ry="1.5" fill="#0a0502" transform="rotate(-15 44 41)" />
+  <circle cx="43.5" cy="40.5" r="0.6" fill="#ffffff" />
+
+  <!-- Nostril -->
+  <path d="M 16,59 C 18,58 20,59 19,61 C 17,62 15,61 16,59 Z" fill="#0f0703" />
+
+  <!-- Muzzle/Mouth Line -->
+  <path d="M 12,62 C 17,63 20,63 24,61" stroke="#0f0703" stroke-width="0.7" fill="none" stroke-linecap="round" />
+</svg>

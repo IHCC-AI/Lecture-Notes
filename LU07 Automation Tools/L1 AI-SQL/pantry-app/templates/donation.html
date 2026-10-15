@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Record donation{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">INVENTORY INTAKE</p>
+        <h1>Record a donation</h1>
+    </div>
+    <a class="button button-secondary" href="{{ url_for('inventory') }}">Back to inventory</a>
+</section>
+
+<form class="form-panel" method="post">
+    {% if error %}
+    <div class="form-error" role="alert">{{ error }}</div>
+    {% endif %}
+
+    <div class="form-field">
+        <label for="donor_id">Donor</label>
+        <select id="donor_id" name="donor_id" required>
+            <option value="">Choose a donor</option>
+            {% for donor in donors %}
+            <option value="{{ donor.donor_id }}" {% if request.form.get('donor_id') == donor.donor_id|string %}selected{% endif %}>{{ donor.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-field">
+        <label for="item_id">Pantry item</label>
+        <select id="item_id" name="item_id" required>
+            <option value="">Choose an item</option>
+            {% for item in items %}
+            <option value="{{ item.item_id }}" {% if request.form.get('item_id') == item.item_id|string %}selected{% endif %}>{{ item.name }} ({{ item.unit }})</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="form-grid">
+        <div class="form-field">
+            <label for="quantity">Quantity received</label>
+            <input id="quantity" name="quantity" type="number" min="1" step="1" value="{{ quantity }}" required>
+        </div>
+        <div class="form-field">
+            <label for="expires_on">Expiration date <span class="optional">Optional</span></label>
+            <input id="expires_on" name="expires_on" type="date" min="{{ today }}" value="{{ expires_on }}">
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button class="button button-primary" type="submit">Save donation</button>
+    </div>
+</form>
+{% endblock %}

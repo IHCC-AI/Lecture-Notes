@@ -1,5 +1,9 @@
 # AI Multimedia Generation
 
+<!-- TODO include more examples of AI-generated audio and video content -->
+<!-- Doing this on the fly is too time-consuming -->
+<!-- TODO find reliable free AI video generation tools -->
+
 > Icebreaker: [Callers to Washington state hotline press 2 for Spanish and get accented AI English instead](https://apnews.com/article/washington-dol-spanish-accent-ai-3a1b8438a5674c07242a8d48c057d5a3)
 
 AI multimedia generation refers to creating, modify, or enhance audio and video content with AI.

@@ -1,0 +1,67 @@
+{% extends "base.html" %} {% block title %}Inventory{% endblock %} {% block
+content %}
+<section class="page-heading">
+    <div>
+        <p class="eyebrow">PANTRY OPERATIONS</p>
+        <h1>Inventory</h1>
+    </div>
+    <a class="button button-primary" href="{{ url_for('new_donation') }}"
+        >Record donation <span aria-hidden="true">+</span></a
+    >
+</section>
+
+{% if saved %}
+<div class="notice" role="status">
+    Donation recorded. Inventory has been updated.
+</div>
+{% endif %}
+
+<section class="summary-row" aria-label="Inventory summary">
+    <div class="summary-item">
+        <span class="summary-label">Active items</span>
+        <strong>{{ items|length }}</strong>
+    </div>
+    <div class="summary-item">
+        <span class="summary-label">Items with stock</span>
+        <strong>{{ stocked_items }}</strong>
+    </div>
+</section>
+
+<div class="table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th scope="col">Item</th>
+                <th scope="col">Category</th>
+                <th scope="col">Available</th>
+                <th scope="col">Next expiration</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <th scope="row" class="item-name">{{ item.item_name }}</th>
+                <td class="muted-cell">{{ item.category_name }}</td>
+                <td>
+                    {% if item.quantity_available > 0 %}
+                    <span class="quantity">{{ item.quantity_available }}</span>
+                    <span class="unit">{{ item.unit }}</span>
+                    {% else %}
+                    <span class="out-of-stock">0 {{ item.unit }}</span>
+                    {% endif %}
+                </td>
+                <td class="muted-cell">
+                    {% if item.next_expiration %}{{ item.next_expiration }}{%
+                    else %}<span aria-label="No expiration date">—</span>{%
+                    endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" class="empty-state">No active items found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

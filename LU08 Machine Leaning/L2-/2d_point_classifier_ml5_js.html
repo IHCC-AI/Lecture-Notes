@@ -1,0 +1,851 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>2D Point Classifier - p5.js + ml5.js</title>
+        <!-- Tailwind CSS for UI styling -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <!-- Font Awesome Icons -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        />
+        <!-- p5.js v1.9.0 -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
+        <!-- ml5.js v0.12.2 (TensorFlow.js wrapper for creative coders) -->
+        <script src="https://unpkg.com/ml5@0.12.2/dist/ml5.min.js"></script>
+
+        <style>
+            body {
+                background-color: #0b0f19;
+                color: #e2e8f0;
+                font-family:
+                    system-ui,
+                    -apple-system,
+                    BlinkMacSystemFont,
+                    'Segoe UI',
+                    Roboto,
+                    Oxygen,
+                    Ubuntu,
+                    Cantarell,
+                    sans-serif;
+            }
+            canvas {
+                border-radius: 12px;
+                box-shadow:
+                    0 10px 25px -5px rgba(0, 0, 0, 0.5),
+                    0 8px 10px -6px rgba(0, 0, 0, 0.5);
+                cursor: crosshair;
+            }
+            .custom-scrollbar::-webkit-scrollbar {
+                width: 6px;
+            }
+            .custom-scrollbar::-webkit-scrollbar-track {
+                background: #1e293b;
+            }
+            .custom-scrollbar::-webkit-scrollbar-thumb {
+                background: #475569;
+                border-radius: 3px;
+            }
+        </style>
+    </head>
+    <body
+        class="min-h-screen p-4 md:p-6 flex flex-col justify-start items-center"
+    >
+        <!-- Header -->
+        <header
+            class="w-full max-w-6xl mb-6 flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-slate-800 pb-4"
+        >
+            <div>
+                <h1
+                    class="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-purple-400 to-cyan-400 flex items-center gap-2.5"
+                >
+                    <i class="fa-solid fa-network-wired text-cyan-400"></i> 2D
+                    Point Classifier Lab
+                </h1>
+                <p class="text-xs md:text-sm text-slate-400 mt-1">
+                    Train a neural network on 2D numerical coordinates using
+                    <span class="text-rose-400 font-semibold">p5.js</span> and
+                    <span class="text-cyan-400 font-semibold"
+                        >ml5.neuralNetwork()</span
+                    >
+                </p>
+            </div>
+
+            <!-- Status Badge -->
+            <div
+                id="statusBadge"
+                class="px-4 py-2 rounded-full border border-rose-500/30 bg-rose-500/10 text-rose-400 text-xs font-semibold flex items-center gap-2 shadow-lg"
+            >
+                <span
+                    class="w-2 h-2 rounded-full bg-rose-400 animate-pulse"
+                ></span>
+                <span id="statusText">Collecting Training Points</span>
+            </div>
+        </header>
+
+        <!-- Main Container -->
+        <main
+            class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-6 items-start"
+        >
+            <!-- LEFT PANEL: Controls & Telemetry (5 cols) -->
+            <section
+                class="lg:col-span-5 bg-slate-900/80 border border-slate-800 rounded-2xl p-5 shadow-xl flex flex-col gap-5"
+            >
+                <!-- Notification Toast Message Box -->
+                <div
+                    id="toast"
+                    class="hidden px-3 py-2 rounded-lg text-xs font-medium border flex items-center gap-2 transition-all"
+                >
+                    <i id="toastIcon" class="fa-solid fa-circle-info"></i>
+                    <span id="toastMsg">Notification message</span>
+                </div>
+
+                <!-- Class Selection Cards -->
+                <div>
+                    <label
+                        class="text-xs font-bold uppercase tracking-wider text-slate-400 block mb-2 flex items-center justify-between"
+                    >
+                        <span>1. Choose Class Label to Plot</span>
+                        <span class="text-slate-500 text-[10px] font-normal"
+                            >Click canvas to add</span
+                        >
+                    </label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <!-- Class A (Red) Button -->
+                        <button
+                            id="btnClassA"
+                            onclick="selectClass('Class A')"
+                            class="relative p-3 rounded-xl border-2 border-rose-500 bg-rose-950/30 text-rose-300 font-semibold text-xs flex flex-col items-center gap-1.5 transition-all shadow-md hover:bg-rose-900/20"
+                        >
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="w-3 h-3 rounded-full bg-rose-500 shadow-[0_0_8px_#f43f5e]"
+                                ></span>
+                                <span>Class A (Red)</span>
+                            </div>
+                            <span
+                                id="countA"
+                                class="text-[11px] text-rose-400/80 font-normal"
+                                >0 points</span
+                            >
+                            <div
+                                id="badgeA"
+                                class="absolute -top-2 -right-2 bg-rose-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] font-bold shadow"
+                            >
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                        </button>
+
+                        <!-- Class B (Cyan) Button -->
+                        <button
+                            id="btnClassB"
+                            onclick="selectClass('Class B')"
+                            class="relative p-3 rounded-xl border-2 border-slate-700 bg-slate-800/40 text-slate-400 font-semibold text-xs flex flex-col items-center gap-1.5 transition-all shadow-md hover:bg-slate-800"
+                        >
+                            <div class="flex items-center gap-2">
+                                <span
+                                    class="w-3 h-3 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]"
+                                ></span>
+                                <span>Class B (Cyan)</span>
+                            </div>
+                            <span
+                                id="countB"
+                                class="text-[11px] text-slate-400/80 font-normal"
+                                >0 points</span
+                            >
+                            <div
+                                id="badgeB"
+                                class="hidden absolute -top-2 -right-2 bg-cyan-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] font-bold shadow"
+                            >
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Training Controls -->
+                <div class="border-t border-slate-800 pt-4 flex flex-col gap-4">
+                    <div class="flex items-center justify-between">
+                        <label
+                            for="epochInput"
+                            class="text-xs font-bold uppercase tracking-wider text-slate-400"
+                        >
+                            2. Training Epochs
+                        </label>
+                        <div class="flex items-center gap-2">
+                            <input
+                                type="range"
+                                id="epochSlider"
+                                min="10"
+                                max="100"
+                                value="30"
+                                step="5"
+                                oninput="syncEpochs(this.value)"
+                                class="w-24 accent-rose-500 cursor-pointer"
+                            />
+                            <span
+                                id="epochVal"
+                                class="text-xs font-bold text-rose-400 bg-slate-950 px-2 py-1 rounded border border-slate-800"
+                                >30</span
+                            >
+                        </div>
+                    </div>
+
+                    <!-- Train Button -->
+                    <button
+                        id="btnTrain"
+                        onclick="startTraining()"
+                        class="w-full py-3 px-4 bg-gradient-to-r from-rose-500 to-purple-600 hover:from-rose-600 hover:to-purple-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-lg transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                        <i class="fa-solid fa-play"></i> Train Neural Network
+                    </button>
+
+                    <!-- Utility Buttons -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <button
+                            onclick="clearPoints()"
+                            class="py-2 px-3 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1.5 border border-slate-700"
+                        >
+                            <i class="fa-solid fa-trash-can text-slate-400"></i>
+                            Clear Points
+                        </button>
+                        <button
+                            onclick="resetModel()"
+                            class="py-2 px-3 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1.5 border border-slate-700"
+                        >
+                            <i
+                                class="fa-solid fa-rotate-right text-slate-400"
+                            ></i>
+                            Reset All
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Training Progress & Telemetry Card -->
+                <div class="border-t border-slate-800 pt-4">
+                    <h3
+                        class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center justify-between"
+                    >
+                        <span>Training Telemetry</span>
+                        <span
+                            id="lossVal"
+                            class="text-cyan-400 font-mono font-normal text-[11px]"
+                            >Loss: --</span
+                        >
+                    </h3>
+
+                    <!-- Epoch Progress Bar -->
+                    <div
+                        class="w-full bg-slate-950 rounded-full h-2.5 overflow-hidden border border-slate-800 mb-2"
+                    >
+                        <div
+                            id="progressBar"
+                            class="bg-gradient-to-r from-rose-500 to-cyan-400 h-full w-0% transition-all duration-150"
+                        ></div>
+                    </div>
+                    <div
+                        class="flex justify-between text-[11px] text-slate-400 font-mono"
+                    >
+                        <span id="epochProgress">Epoch: 0 / 30</span>
+                        <span id="timeElapsed">Time: 0.0s</span>
+                    </div>
+                </div>
+
+                <!-- Live Mouse Hover Predictor Stats -->
+                <div
+                    class="bg-slate-950 border border-slate-800 rounded-xl p-3 text-xs space-y-1.5"
+                >
+                    <div
+                        class="flex justify-between items-center text-slate-400"
+                    >
+                        <span class="flex items-center gap-1.5">
+                            <i class="fa-solid fa-crosshairs text-cyan-400"></i>
+                            Cursor Input (X, Y):
+                        </span>
+                        <span id="mouseCoords" class="font-mono text-slate-200"
+                            >0.00, 0.00</span
+                        >
+                    </div>
+                    <div
+                        class="flex justify-between items-center border-t border-slate-800 pt-1.5"
+                    >
+                        <span class="text-slate-400">Live AI Prediction:</span>
+                        <span
+                            id="livePrediction"
+                            class="font-bold text-slate-400"
+                            >Model Not Trained</span
+                        >
+                    </div>
+                </div>
+
+                <!-- Pedagogical Explanation Card -->
+                <div
+                    class="bg-slate-950/60 border border-slate-800/80 rounded-xl p-3 text-[11px] text-slate-400 leading-relaxed"
+                >
+                    <span class="text-cyan-400 font-bold block mb-1"
+                        >💡 What's Happening Here?</span
+                    >
+                    <ul class="list-disc list-inside space-y-1 text-slate-400">
+                        <li>
+                            <strong>Inputs (2):</strong> Mouse coordinates
+                            normalized
+                            <code class="text-slate-300"
+                                >(X: 0.0–1.0, Y: 0.0–1.0)</code
+                            >.
+                        </li>
+                        <li>
+                            <strong>Outputs (2):</strong> Categorical confidence
+                            for Class A vs Class B.
+                        </li>
+                        <li>
+                            <strong>Decision Boundary:</strong> After training,
+                            the background reveals the neural network's decision
+                            regions.
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- RIGHT PANEL: p5 Canvas Target (7 cols) -->
+            <section
+                class="lg:col-span-7 flex flex-col items-center justify-center bg-slate-900/40 border border-slate-800/80 rounded-2xl p-4 shadow-xl"
+            >
+                <!-- Canvas Container -->
+                <div
+                    id="canvas-holder"
+                    class="relative flex items-center justify-center w-full max-w-[500px] aspect-square"
+                >
+                    <!-- p5 Canvas attaches here dynamically -->
+                </div>
+
+                <!-- Legend Overlay -->
+                <div
+                    class="w-full max-w-[500px] mt-4 flex items-center justify-between text-xs text-slate-400 px-2"
+                >
+                    <div class="flex items-center gap-2">
+                        <span
+                            class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"
+                        ></span>
+                        Class A Region
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span
+                            class="w-2.5 h-2.5 rounded-full bg-cyan-400 inline-block"
+                        ></span>
+                        Class B Region
+                    </div>
+                    <div class="text-slate-400 italic text-[11px]">
+                        Grid: 25x25 Decision Map
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <script>
+            // State Variables
+            let nn;
+            let points = [];
+            let activeClass = 'Class A';
+            let modelState = 'COLLECTING'; // 'COLLECTING', 'TRAINING', 'TRAINED'
+            let targetEpochs = 30;
+            let currentEpoch = 0;
+            let currentLoss = 0;
+            let startTime = 0;
+
+            // Grid Decision Boundary cache
+            let decisionGrid = []; // Array of {x, y, label, confidence}
+            const GRID_RES = 25; // 25x25 resolution decision map
+
+            // Hover Prediction cache
+            let hoverPred = null;
+
+            // Color Palette
+            const COLOR_CLASS_A = { r: 244, g: 63, b: 94 }; // Rose / Red
+            const COLOR_CLASS_B = { r: 6, g: 182, b: 212 }; // Cyan / Blue
+
+            function setup() {
+                // Create 500x500 square canvas and attach to container
+                const canvas = createCanvas(500, 500);
+                canvas.parent('canvas-holder');
+
+                // Handle canvas mouse click specifically inside canvas bounds
+                canvas.mousePressed(handleCanvasClick);
+
+                // Initialize ml5 Neural Network
+                initNeuralNetwork();
+
+                // Set text styling
+                textFont('system-ui');
+            }
+
+            function initNeuralNetwork() {
+                const options = {
+                    inputs: ['x', 'y'],
+                    outputs: ['label'],
+                    task: 'classification',
+                    debug: false,
+                };
+                nn = ml5.neuralNetwork(options);
+            }
+
+            function draw() {
+                background(13, 17, 25);
+
+                // 1. Render Decision Boundary Grid if trained
+                if (modelState === 'TRAINED' && decisionGrid.length > 0) {
+                    drawDecisionBoundary();
+                } else {
+                    drawSubtleGridLines();
+                }
+
+                // 2. Render Training Points
+                drawTrainingPoints();
+
+                // 3. Render Hover Cursor and Prediction HUD on Canvas
+                if (
+                    mouseX >= 0 &&
+                    mouseX <= width &&
+                    mouseY >= 0 &&
+                    mouseY <= height
+                ) {
+                    drawCursorHighlight();
+                }
+            }
+
+            function drawSubtleGridLines() {
+                stroke(255, 255, 255, 12);
+                strokeWeight(1);
+                const step = width / 10;
+                for (let i = 0; i <= width; i += step) {
+                    line(i, 0, i, height);
+                    line(0, i, width, i);
+                }
+            }
+
+            function drawDecisionBoundary() {
+                noStroke();
+                const cellW = width / GRID_RES;
+                const cellH = height / GRID_RES;
+
+                for (let cell of decisionGrid) {
+                    const px = cell.gx * cellW;
+                    const py = cell.gy * cellH;
+
+                    if (cell.label === 'Class A') {
+                        // Rose fill with alpha scaled by confidence
+                        fill(
+                            COLOR_CLASS_A.r,
+                            COLOR_CLASS_A.g,
+                            COLOR_CLASS_A.b,
+                            map(cell.confidence, 0.5, 1.0, 40, 140),
+                        );
+                    } else {
+                        // Cyan fill with alpha scaled by confidence
+                        fill(
+                            COLOR_CLASS_B.r,
+                            COLOR_CLASS_B.g,
+                            COLOR_CLASS_B.b,
+                            map(cell.confidence, 0.5, 1.0, 40, 140),
+                        );
+                    }
+                    rect(px, py, cellW + 0.5, cellH + 0.5);
+                }
+
+                // Draw crisp decision contour line boundary
+                drawSubtleGridLines();
+            }
+
+            function drawTrainingPoints() {
+                for (let pt of points) {
+                    const px = pt.x * width;
+                    const py = pt.y * height;
+
+                    if (pt.label === 'Class A') {
+                        // Outer glow
+                        fill(
+                            COLOR_CLASS_A.r,
+                            COLOR_CLASS_A.g,
+                            COLOR_CLASS_A.b,
+                            60,
+                        );
+                        noStroke();
+                        circle(px, py, 18);
+
+                        // Core point
+                        fill(COLOR_CLASS_A.r, COLOR_CLASS_A.g, COLOR_CLASS_A.b);
+                        stroke(255);
+                        strokeWeight(1.5);
+                        circle(px, py, 10);
+                    } else {
+                        // Outer glow
+                        fill(
+                            COLOR_CLASS_B.r,
+                            COLOR_CLASS_B.g,
+                            COLOR_CLASS_B.b,
+                            60,
+                        );
+                        noStroke();
+                        circle(px, py, 18);
+
+                        // Core point
+                        fill(COLOR_CLASS_B.r, COLOR_CLASS_B.g, COLOR_CLASS_B.b);
+                        stroke(255);
+                        strokeWeight(1.5);
+                        circle(px, py, 10);
+                    }
+                }
+            }
+
+            function drawCursorHighlight() {
+                const normX = constrain(mouseX / width, 0, 1);
+                const normY = constrain(mouseY / height, 0, 1);
+
+                // Update DOM telemetry
+                document.getElementById('mouseCoords').innerText =
+                    `${normX.toFixed(2)}, ${normY.toFixed(2)}`;
+
+                // Draw crosshairs
+                stroke(255, 255, 255, 40);
+                strokeWeight(1);
+                line(mouseX, 0, mouseX, height);
+                line(0, mouseY, width, mouseY);
+
+                // If model is trained, trigger live classification
+                if (modelState === 'TRAINED') {
+                    classifyMousePoint(normX, normY);
+
+                    if (hoverPred) {
+                        const isClassA = hoverPred.label === 'Class A';
+                        const col = isClassA ? COLOR_CLASS_A : COLOR_CLASS_B;
+                        const confPercent = (
+                            hoverPred.confidence * 100
+                        ).toFixed(1);
+
+                        // Floating canvas tooltip near cursor
+                        fill(15, 23, 42, 220);
+                        stroke(col.r, col.g, col.b);
+                        strokeWeight(1.5);
+                        rect(mouseX + 12, mouseY + 12, 120, 36, 8);
+
+                        noStroke();
+                        fill(col.r, col.g, col.b);
+                        circle(mouseX + 24, mouseY + 30, 8);
+
+                        fill(255);
+                        textSize(11);
+                        textAlign(LEFT, CENTER);
+                        text(`${hoverPred.label}`, mouseX + 34, mouseY + 24);
+                        fill(200);
+                        text(`${confPercent}% conf`, mouseX + 34, mouseY + 36);
+
+                        // Update DOM Live Prediction Badge
+                        const liveBadge =
+                            document.getElementById('livePrediction');
+                        liveBadge.innerText = `${hoverPred.label} (${confPercent}%)`;
+                        liveBadge.className = `font-bold ${isClassA ? 'text-rose-400' : 'text-cyan-400'}`;
+                    }
+                } else {
+                    // Ghost preview point for current active class
+                    noStroke();
+                    if (activeClass === 'Class A') {
+                        fill(
+                            COLOR_CLASS_A.r,
+                            COLOR_CLASS_A.g,
+                            COLOR_CLASS_A.b,
+                            120,
+                        );
+                    } else {
+                        fill(
+                            COLOR_CLASS_B.r,
+                            COLOR_CLASS_B.g,
+                            COLOR_CLASS_B.b,
+                            120,
+                        );
+                    }
+                    circle(mouseX, mouseY, 12);
+                }
+            }
+
+            function handleCanvasClick() {
+                if (modelState === 'TRAINING') return;
+
+                if (
+                    mouseX >= 0 &&
+                    mouseX <= width &&
+                    mouseY >= 0 &&
+                    mouseY <= height
+                ) {
+                    const normX = mouseX / width;
+                    const normY = mouseY / height;
+
+                    // Add to dataset array
+                    points.push({ x: normX, y: normY, label: activeClass });
+
+                    // Pass data point to ml5 neural network
+                    nn.addData({ x: normX, y: normY }, { label: activeClass });
+
+                    // Update UI Counters
+                    updatePointCounts();
+
+                    // If trained earlier, reset model state to allow new training
+                    if (modelState === 'TRAINED') {
+                        modelState = 'COLLECTING';
+                        decisionGrid = [];
+                        updateStatus('Collecting Training Points', 'rose');
+                        document.getElementById('livePrediction').innerText =
+                            'Re-training needed';
+                        document.getElementById('livePrediction').className =
+                            'font-bold text-slate-400';
+                    }
+                }
+            }
+
+            function selectClass(className) {
+                activeClass = className;
+                const btnA = document.getElementById('btnClassA');
+                const btnB = document.getElementById('btnClassB');
+                const badgeA = document.getElementById('badgeA');
+                const badgeB = document.getElementById('badgeB');
+
+                if (className === 'Class A') {
+                    btnA.className =
+                        'relative p-3 rounded-xl border-2 border-rose-500 bg-rose-950/30 text-rose-300 font-semibold text-xs flex flex-col items-center gap-1.5 transition-all shadow-md hover:bg-rose-900/20';
+                    btnB.className =
+                        'relative p-3 rounded-xl border-2 border-slate-700 bg-slate-800/40 text-slate-400 font-semibold text-xs flex flex-col items-center gap-1.5 transition-all shadow-md hover:bg-slate-800';
+                    badgeA.classList.remove('hidden');
+                    badgeB.classList.add('hidden');
+                } else {
+                    btnB.className =
+                        'relative p-3 rounded-xl border-2 border-cyan-500 bg-cyan-950/30 text-cyan-300 font-semibold text-xs flex flex-col items-center gap-1.5 transition-all shadow-md hover:bg-cyan-900/20';
+                    btnA.className =
+                        'relative p-3 rounded-xl border-2 border-slate-700 bg-slate-800/40 text-slate-400 font-semibold text-xs flex flex-col items-center gap-1.5 transition-all shadow-md hover:bg-slate-800';
+                    badgeB.classList.remove('hidden');
+                    badgeA.classList.add('hidden');
+                }
+            }
+
+            function updatePointCounts() {
+                const countA = points.filter(
+                    (p) => p.label === 'Class A',
+                ).length;
+                const countB = points.filter(
+                    (p) => p.label === 'Class B',
+                ).length;
+
+                document.getElementById('countA').innerText =
+                    `${countA} point${countA === 1 ? '' : 's'}`;
+                document.getElementById('countB').innerText =
+                    `${countB} point${countB === 1 ? '' : 's'}`;
+            }
+
+            function syncEpochs(val) {
+                targetEpochs = parseInt(val);
+                document.getElementById('epochVal').innerText = val;
+            }
+
+            function startTraining() {
+                const countA = points.filter(
+                    (p) => p.label === 'Class A',
+                ).length;
+                const countB = points.filter(
+                    (p) => p.label === 'Class B',
+                ).length;
+
+                if (countA === 0 || countB === 0) {
+                    showToast(
+                        'Please add at least 1 point for BOTH Class A and Class B before training.',
+                        'warning',
+                    );
+                    return;
+                }
+
+                modelState = 'TRAINING';
+                updateStatus('Training in progress...', 'amber');
+                document.getElementById('btnTrain').disabled = true;
+
+                // Normalize data inside ml5
+                nn.normalizeData();
+
+                const trainingOptions = {
+                    epochs: targetEpochs,
+                    batchSize: 16,
+                };
+
+                currentEpoch = 0;
+                startTime = performance.now();
+
+                // Trigger training with callback handlers
+                nn.train(trainingOptions, whileTraining, finishedTraining);
+            }
+
+            function whileTraining(epoch, loss) {
+                currentEpoch = epoch + 1;
+                currentLoss = loss.loss;
+
+                const progressPct = (
+                    (currentEpoch / targetEpochs) *
+                    100
+                ).toFixed(0);
+                const elapsedSec = (
+                    (performance.now() - startTime) /
+                    1000
+                ).toFixed(1);
+
+                document.getElementById('progressBar').style.width =
+                    `${progressPct}%`;
+                document.getElementById('epochProgress').innerText =
+                    `Epoch: ${currentEpoch} / ${targetEpochs}`;
+                document.getElementById('lossVal').innerText =
+                    `Loss: ${currentLoss.toFixed(4)}`;
+                document.getElementById('timeElapsed').innerText =
+                    `Time: ${elapsedSec}s`;
+            }
+
+            async function finishedTraining() {
+                modelState = 'TRAINED';
+                updateStatus('Model Trained Successfully!', 'emerald');
+                document.getElementById('btnTrain').disabled = false;
+                showToast(
+                    'Neural Network trained! Computing decision boundary...',
+                    'success',
+                );
+
+                // Generate Decision Boundary Grid Map
+                await generateDecisionBoundaryGrid();
+            }
+
+            async function generateDecisionBoundaryGrid() {
+                decisionGrid = [];
+                const step = 1 / GRID_RES;
+                const promises = [];
+
+                for (let gx = 0; gx < GRID_RES; gx++) {
+                    for (let gy = 0; gy < GRID_RES; gy++) {
+                        const nx = (gx + 0.5) * step;
+                        const ny = (gy + 0.5) * step;
+
+                        // Asynchronous classification prediction for grid cell
+                        promises.push(
+                            nn.classify([nx, ny]).then((results) => {
+                                return {
+                                    gx: gx,
+                                    gy: gy,
+                                    label: results[0].label,
+                                    confidence: results[0].confidence,
+                                };
+                            }),
+                        );
+                    }
+                }
+
+                // Resolve all grid cell predictions concurrently
+                decisionGrid = await Promise.all(promises);
+            }
+
+            let lastClassifyTime = 0;
+            function classifyMousePoint(nx, ny) {
+                const now = performance.now();
+                // Throttle classification calls to every 30ms for optimal UI performance
+                if (now - lastClassifyTime < 30) return;
+                lastClassifyTime = now;
+
+                nn.classify([nx, ny], (error, results) => {
+                    if (error) return;
+                    if (results && results.length > 0) {
+                        hoverPred = {
+                            label: results[0].label,
+                            confidence: results[0].confidence,
+                        };
+                    }
+                });
+            }
+
+            function clearPoints() {
+                points = [];
+                decisionGrid = [];
+                hoverPred = null;
+                updatePointCounts();
+                resetModel();
+                showToast('All training points cleared.', 'info');
+            }
+
+            function resetModel() {
+                modelState = 'COLLECTING';
+                decisionGrid = [];
+                hoverPred = null;
+                currentEpoch = 0;
+                currentLoss = 0;
+
+                document.getElementById('progressBar').style.width = '0%';
+                document.getElementById('epochProgress').innerText =
+                    `Epoch: 0 / ${targetEpochs}`;
+                document.getElementById('lossVal').innerText = 'Loss: --';
+                document.getElementById('timeElapsed').innerText = 'Time: 0.0s';
+                document.getElementById('livePrediction').innerText =
+                    'Model Not Trained';
+                document.getElementById('livePrediction').className =
+                    'font-bold text-slate-400';
+                document.getElementById('btnTrain').disabled = false;
+
+                updateStatus('Collecting Training Points', 'rose');
+
+                // Re-instantiate ml5 Neural Network
+                initNeuralNetwork();
+
+                // Re-add existing points to new network instance
+                for (let pt of points) {
+                    nn.addData({ x: pt.x, y: pt.y }, { label: pt.label });
+                }
+            }
+
+            function updateStatus(text, theme) {
+                const badge = document.getElementById('statusBadge');
+                const statusText = document.getElementById('statusText');
+                statusText.innerText = text;
+
+                if (theme === 'rose') {
+                    badge.className =
+                        'px-4 py-2 rounded-full border border-rose-500/30 bg-rose-500/10 text-rose-400 text-xs font-semibold flex items-center gap-2 shadow-lg';
+                } else if (theme === 'amber') {
+                    badge.className =
+                        'px-4 py-2 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 text-xs font-semibold flex items-center gap-2 shadow-lg';
+                } else if (theme === 'emerald') {
+                    badge.className =
+                        'px-4 py-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-xs font-semibold flex items-center gap-2 shadow-lg';
+                }
+            }
+
+            function showToast(message, type = 'info') {
+                const toast = document.getElementById('toast');
+                const toastMsg = document.getElementById('toastMsg');
+                const toastIcon = document.getElementById('toastIcon');
+
+                toastMsg.innerText = message;
+                toast.classList.remove('hidden');
+
+                if (type === 'warning') {
+                    toast.className =
+                        'px-3 py-2 rounded-lg text-xs font-medium border border-amber-500/30 bg-amber-500/10 text-amber-300 flex items-center gap-2 transition-all';
+                    toastIcon.className =
+                        'fa-solid fa-triangle-exclamation text-amber-400';
+                } else if (type === 'success') {
+                    toast.className =
+                        'px-3 py-2 rounded-lg text-xs font-medium border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 flex items-center gap-2 transition-all';
+                    toastIcon.className =
+                        'fa-solid fa-circle-check text-emerald-400';
+                } else {
+                    toast.className =
+                        'px-3 py-2 rounded-lg text-xs font-medium border border-cyan-500/30 bg-cyan-500/10 text-cyan-300 flex items-center gap-2 transition-all';
+                    toastIcon.className =
+                        'fa-solid fa-circle-info text-cyan-400';
+                }
+
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 4000);
+            }
+        </script>
+    </body>
+</html>

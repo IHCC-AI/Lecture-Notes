@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>{% block title %}Pantry Desk{% endblock %} | Pantry Desk</title>
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='style.css') }}"
+        />
+    </head>
+    <body>
+        <header class="site-header">
+            <a
+                class="brand"
+                href="{{ url_for('inventory') }}"
+                aria-label="Pantry Desk home"
+            >
+                <span class="brand-mark" aria-hidden="true">P</span>
+                <span>Pantry Desk</span>
+            </a>
+            <nav class="main-nav" aria-label="Main navigation">
+                <a
+                    href="{{ url_for('inventory') }}"
+                    >Inventory</a
+                >
+                <a
+                    href="{{ url_for('new_donation') }}"
+                    >Record donation</a
+                >
+            </nav>
+        </header>
+        <main class="page-shell">{% block content %}{% endblock %}</main>
+        <footer class="site-footer">
+            Community Food Pantry <span>·</span> Local demo
+        </footer>
+    </body>
+</html>

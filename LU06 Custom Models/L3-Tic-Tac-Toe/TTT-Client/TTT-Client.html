@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Tic-Tac-Toe</title>
+        <style>
+            body {
+                max-width: 420px;
+                margin: 30px auto;
+                font-family: sans-serif;
+                text-align: center;
+            }
+
+            table {
+                border-collapse: collapse;
+                margin: 20px auto;
+            }
+
+            td {
+                width: 100px;
+                height: 100px;
+                text-align: center;
+                vertical-align: middle;
+                border: 1px solid #333;
+            }
+
+            button {
+                width: 100%;
+                height: 100%;
+                font-size: 24px;
+                cursor: pointer;
+            }
+
+            textarea {
+                width: 100%;
+                height: 100px;
+                margin-top: 20px;
+            }
+
+            #start-game {
+                width: auto;
+                padding: 10px 18px;
+            }
+
+            #status {
+                min-height: 1.5em;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Tic-Tac-Toe Game</h1>
+        <p id="status" aria-live="polite">
+            Start a game to let the AI play first.
+        </p>
+        <button id="start-game" type="button">Start Game</button>
+        <table>
+            <tr>
+                <td>
+                    <button
+                        type="button"
+                        data-row="0"
+                        data-col="0"
+                        aria-label="Row 1, column 1"
+                    ></button>
+                </td>
+                <td>
+                    <button
+                        type="button"
+                        data-row="0"
+                        data-col="1"
+                        aria-label="Row 1, column 2"
+                    ></button>
+                </td>
+                <td>
+                    <button
+                        type="button"
+                        data-row="0"
+                        data-col="2"
+                        aria-label="Row 1, column 3"
+                    ></button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button
+                        type="button"
+                        data-row="1"
+                        data-col="0"
+                        aria-label="Row 2, column 1"
+                    ></button>
+                </td>
+                <td>
+                    <button
+                        type="button"
+                        data-row="1"
+                        data-col="1"
+                        aria-label="Row 2, column 2"
+                    ></button>
+                </td>
+                <td>
+                    <button
+                        type="button"
+                        data-row="1"
+                        data-col="2"
+                        aria-label="Row 2, column 3"
+                    ></button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button
+                        type="button"
+                        data-row="2"
+                        data-col="0"
+                        aria-label="Row 3, column 1"
+                    ></button>
+                </td>
+                <td>
+                    <button
+                        type="button"
+                        data-row="2"
+                        data-col="1"
+                        aria-label="Row 3, column 2"
+                    ></button>
+                </td>
+                <td>
+                    <button
+                        type="button"
+                        data-row="2"
+                        data-col="2"
+                        aria-label="Row 3, column 3"
+                    ></button>
+                </td>
+            </tr>
+        </table>
+        <textarea id="ai-response">
+            AI response will appear for debugging.
+        </textarea>
+        <script>
+            const OLLAMA_HOST = 'http://localhost';
+            const PORT = '11434';
+            const MODEL_NAME = 'ttt-ai';
+
+            const board = [
+                ['', '', ''],
+                ['', '', ''],
+                ['', '', ''],
+            ];
+
+            const cells = document.querySelectorAll('td button');
+            const startButton = document.querySelector('#start-game');
+            const statusText = document.querySelector('#status');
+            const aiResponse = document.querySelector('#ai-response');
+
+            let gameActive = false;
+            let aiThinking = false;
+            aiResponse.value = 'AI response will appear for debugging.';
+
+            for (const cell of cells) {
+                cell.addEventListener('click', handleCellClick);
+            }
+
+            startButton.addEventListener('click', startGame);
+            renderBoard();
+
+            function renderBoard() {
+                for (const cell of cells) {
+                    const row = Number(cell.dataset.row);
+                    const col = Number(cell.dataset.col);
+                    cell.textContent = board[row][col];
+                    cell.disabled =
+                        !gameActive || aiThinking || board[row][col] !== '';
+                }
+            }
+
+            function setStatus(message) {
+                statusText.textContent = message;
+            }
+
+            async function startGame() {
+                for (let row = 0; row < 3; row += 1) {
+                    board[row].fill('');
+                }
+
+                gameActive = true;
+                startButton.disabled = true;
+                setStatus('AI is choosing its first move...');
+                aiResponse.value = 'AI is thinking...';
+                await makeAIMove();
+            }
+
+            async function handleCellClick(event) {
+                if (!gameActive || aiThinking) return;
+
+                const row = Number(event.currentTarget.dataset.row);
+                const col = Number(event.currentTarget.dataset.col);
+                if (board[row][col] !== '') return;
+
+                board[row][col] = 'O';
+                renderBoard();
+
+                if (finishIfOver()) return;
+
+                await makeAIMove();
+            }
+
+            async function callAI() {
+                const prompt = JSON.stringify(
+                    board.map((row) => row.map((cell) => cell || ' ')),
+                );
+                const response = await fetch(
+                    `${OLLAMA_HOST}:${PORT}/api/generate`,
+                    {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            model: MODEL_NAME,
+                            prompt,
+                            stream: false,
+                            think: false,
+                        }),
+                    },
+                );
+                return response;
+            }
+
+            async function makeAIMove() {
+                aiThinking = true;
+                renderBoard();
+
+                try {
+                    let response = await callAI();
+
+                    if (!response.ok) {
+                        throw new Error(
+                            `Ollama returned HTTP ${response.status}.`,
+                        );
+                    }
+
+                    response = await response.text();
+                    
+                    const data = await response.json();
+                    
+                    let aiResponseText = data.response;
+
+                    // TODO simplify this. Recall the AI if the response is not in the expected format.
+                    // Remove all characters that are not numbers or commas
+                    let cleanedResponse = aiResponseText.replace(/[^0-9,]/g, '');
+
+                    console.log('AI response:', cleanedResponse);
+
+                    aiResponse.value = cleanedResponse;
+
+
+
+                    const move = data.response.match(
+                        /^\s*([0-2])\s*,\s*([0-2])\s*$/,
+                    );
+                    if (!move) {
+                        throw new Error(
+                            'The AI did not return a move in row,column format.',
+                        );
+                    }
+
+                    const row = Number(move[1]);
+                    const col = Number(move[2]);
+                    if (board[row][col] !== '') {
+                        throw new Error(
+                            'The AI selected a square that is already occupied.',
+                        );
+                    }
+
+                    board[row][col] = 'X';
+                    renderBoard();
+                    if (!finishIfOver()) setStatus('Your turn (O).');
+                } catch (error) {
+                    gameActive = false;
+                    startButton.disabled = false;
+                    startButton.textContent = 'Restart Game';
+                    setStatus(
+                        `Could not get a valid AI move: ${error.message}`,
+                    );
+                } finally {
+                    aiThinking = false;
+                    startButton.disabled = false;
+                    renderBoard();
+                }
+            }
+
+            function finishIfOver() {
+                const lines = [
+                    ...board,
+                    [board[0][0], board[1][0], board[2][0]],
+                    [board[0][1], board[1][1], board[2][1]],
+                    [board[0][2], board[1][2], board[2][2]],
+                    [board[0][0], board[1][1], board[2][2]],
+                    [board[0][2], board[1][1], board[2][0]],
+                ];
+                const winner = lines.find(
+                    (line) =>
+                        line[0] !== '' &&
+                        line.every((cell) => cell === line[0]),
+                )?.[0];
+
+                if (winner) {
+                    gameActive = false;
+                    setStatus(winner === 'X' ? 'The AI wins.' : 'You win!');
+                } else if (
+                    board.every((row) => row.every((cell) => cell !== ''))
+                ) {
+                    gameActive = false;
+                    setStatus("It's a draw.");
+                } else {
+                    return false;
+                }
+
+                startButton.textContent = 'Play Again';
+                startButton.disabled = false;
+                renderBoard();
+                return true;
+            }
+        </script>
+    </body>
+</html>

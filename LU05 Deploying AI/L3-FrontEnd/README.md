@@ -51,3 +51,5 @@ There are so many but I will use [Alpaca](https://jeffser.com/alpaca/). You don'
 Download [the HTML file](./AIClient/AIClient.html) from blackboard and open it in your browser.
 Edit the Model and Port to match your Ollama settings.
 I thought this example together so it's not perfect.
+
+> You need to use VSCode live server or use Node.js to run the HTML file. If you just open it in your browser, it will not work because of CORS issues.

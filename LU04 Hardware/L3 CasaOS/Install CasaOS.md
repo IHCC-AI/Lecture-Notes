@@ -12,8 +12,10 @@ What is [CasaOS](https://casaos.zimaspace.com/)?
 - Connect Via SSH
 
 ```bash
-ssh pi@10.12.184.151
+ssh lukepi@ai-pi.local
 ```
+
+> Password is: raspberry@12
 
 ## Install CasaOS
 
@@ -33,7 +35,7 @@ Look around CasaOS
 Just install it.
 Make sure to put a video in the Movies folder in the file system.
 Watch the video.
-Your own netflix in 10m
+Your own netflix in 10m.
 
 ## Crafty
 
@@ -45,7 +47,7 @@ Username is always `admin`.
 Password in located in: `app/config/default-creds.txt`.
 
 Come back to this if you have time.
-Try to play some MC
+Try to play some MC.
 
 ## AI
 
