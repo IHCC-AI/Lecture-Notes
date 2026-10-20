@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="theme-color" content="#101827" />
+        <title>Shape Quest</title>
+        <link rel="stylesheet" href="style.css" />
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/p5@1.11.3/lib/p5.min.js"
+        ></script>
+        <script
+            defer
+            src="https://unpkg.com/ml5@1.2.1/dist/ml5.min.js"
+        ></script>
+        <script defer src="shape-classifier.js"></script>
+        <script defer src="game.js"></script>
+    </head>
+    <body>
+        <main class="app">
+            <header class="page-header">
+                <h1>Shape Quest</h1>
+                <p>
+                    Teach a model to recognize your drawings, then put it to the
+                    test.
+                </p>
+            </header>
+
+            <section class="game-layout" aria-label="Shape Quest game">
+                <section class="drawing-panel" aria-labelledby="drawing-title">
+                    <div class="panel-heading">
+                        <div>
+                            <h2 id="drawing-title">Draw inside the canvas</h2>
+                        </div>
+                        <button
+                            id="clear-button"
+                            class="button button-secondary"
+                            type="button"
+                        >
+                            Clear
+                        </button>
+                    </div>
+                    <div id="canvas-wrap" class="canvas-wrap"></div>
+                    <p class="help-text">
+                        Use your mouse or finger. Try to draw each shape in
+                        different ways.
+                    </p>
+                </section>
+
+                <section class="control-panel">
+                    <div id="training-controls">
+                        <h2>Teach the model</h2>
+                        <p class="description">
+                            Draw examples of each shape. The model learns from
+                            the examples you collect.
+                        </p>
+
+                        <label for="shape-select">This drawing is a...</label>
+                        <select id="shape-select">
+                            <option value="star">Star</option>
+                            <option value="circle">Circle</option>
+                            <option value="triangle">Triangle</option>
+                        </select>
+
+                        <button
+                            id="add-example-button"
+                            class="button button-primary"
+                            type="button"
+                        >
+                            Add example
+                        </button>
+
+                        <div
+                            class="example-counts"
+                            aria-label="Collected examples"
+                        >
+                            <div>
+                                <span>Star</span
+                                ><strong id="star-count">0</strong>
+                            </div>
+                            <div>
+                                <span>Circle</span
+                                ><strong id="circle-count">0</strong>
+                            </div>
+                            <div>
+                                <span>Triangle</span
+                                ><strong id="triangle-count">0</strong>
+                            </div>
+                        </div>
+
+                        <p class="tip">
+                            Collect at least 3 examples of each shape. More
+                            varied examples usually help.
+                        </p>
+                        <button
+                            id="train-button"
+                            class="button button-primary"
+                            type="button"
+                            disabled
+                        >
+                            Train model
+                        </button>
+                        <button
+                            id="play-button"
+                            class="button button-secondary"
+                            type="button"
+                            disabled
+                        >
+                            Play game
+                        </button>
+                    </div>
+
+                    <div id="play-controls" hidden>
+                        <p class="eyebrow">Step 2</p>
+                        <h2>Play the game</h2>
+                        <p class="description">
+                            Draw a star, circle, or triangle. Your model will
+                            guess which shape you drew.
+                        </p>
+                        <div class="challenge-card" aria-live="polite">
+                            <span>Model's guess</span>
+                            <strong id="prediction">—</strong>
+                            <span id="confidence">Confidence: —</span>
+                        </div>
+                        <button
+                            id="check-button"
+                            class="button button-primary"
+                            type="button"
+                        >
+                            Check my drawing
+                        </button>
+                        <button
+                            id="back-button"
+                            class="text-button"
+                            type="button"
+                        >
+                            Back to training
+                        </button>
+                    </div>
+                </section>
+            </section>
+
+            <p id="status" class="status" role="status" aria-live="polite">
+                Draw a star, circle, or triangle to get started.
+            </p>
+        </main>
+    </body>
+</html>
