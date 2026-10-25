@@ -1,23 +1,81 @@
-body { max-width: 1000px; margin: 0 auto; padding: 1rem; font-family: Arial, sans-serif; }
+body {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 1rem;
+    font-family: Arial, sans-serif;
+}
 
-.game-layout { display: grid; grid-template-columns: 3fr 2fr; gap: 1rem; }
-.drawing-panel, .control-panel, .status { padding: 1rem; border: 1px solid #bbb; border-radius: 8px; }
-.panel-heading { display: flex; align-items: center; justify-content: space-between; }
+.game-layout {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 1rem;
+}
+.drawing-panel,
+.control-panel,
+.status {
+    padding: 1rem;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+}
+.panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
-.canvas-wrap { overflow: hidden; border: 1px solid #ddd; touch-action: none; }
-.canvas-wrap canvas { display: block; width: 100% !important; height: auto !important; }
+.canvas-wrap {
+    overflow: hidden;
+    border: 1px solid #ddd;
+    touch-action: none;
+}
+.canvas-wrap canvas {
+    display: block;
+    width: 100% !important;
+    height: auto !important;
+}
 
-button, select { margin: 0.25rem 0; padding: 0.6rem; }
-button { border: 1px solid #777; border-radius: 5px; cursor: pointer; }
-.button-primary { color: white; background: #2563a8; }
-.button-secondary { color: #222; background: #e5e5e5; }
+button,
+select {
+    margin: 0.25rem 0;
+    padding: 0.6rem;
+}
+button {
+    border: 1px solid #777;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.button-primary {
+    color: white;
+    background: #2563a8;
+}
+.button-secondary {
+    color: #222;
+    background: #e5e5e5;
+}
 
-.example-counts { display: flex; justify-content: space-between; gap: 0.5rem; margin: 1rem 0; }
-.challenge-card { padding: 0.75rem; border: 1px solid #bbb; border-radius: 5px; }
-.status { margin-top: 1rem; }
-.status[data-kind='error'] { color: #a00; }
-[hidden] { display: none !important; }
+.example-counts {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin: 1rem 0;
+}
+.prediction-card {
+    padding: 0.75rem;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+}
+.status {
+    margin-top: 1rem;
+}
+.status[data-kind='error'] {
+    color: #a00;
+}
+[hidden] {
+    display: none !important;
+}
 
 @media (max-width: 700px) {
-    .game-layout { grid-template-columns: 1fr; }
+    .game-layout {
+        grid-template-columns: 1fr;
+    }
 }

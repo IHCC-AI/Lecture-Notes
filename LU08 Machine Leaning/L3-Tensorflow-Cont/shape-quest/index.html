@@ -3,7 +3,6 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#101827" />
         <title>Shape Quest</title>
         <link rel="stylesheet" href="style.css" />
         <script
@@ -30,9 +29,7 @@
             <section class="game-layout" aria-label="Shape Quest game">
                 <section class="drawing-panel" aria-labelledby="drawing-title">
                     <div class="panel-heading">
-                        <div>
-                            <h2 id="drawing-title">Draw inside the canvas</h2>
-                        </div>
+                        <h2 id="drawing-title">Draw inside the canvas</h2>
                         <button
                             id="clear-button"
                             class="button button-secondary"
@@ -76,15 +73,15 @@
                             aria-label="Collected examples"
                         >
                             <div>
-                                <span>Star</span
+                                <span>Star: </span
                                 ><strong id="star-count">0</strong>
                             </div>
                             <div>
-                                <span>Circle</span
+                                <span>Circle: </span
                                 ><strong id="circle-count">0</strong>
                             </div>
                             <div>
-                                <span>Triangle</span
+                                <span>Triangle: </span
                                 ><strong id="triangle-count">0</strong>
                             </div>
                         </div>
@@ -118,7 +115,7 @@
                             Draw a star, circle, or triangle. Your model will
                             guess which shape you drew.
                         </p>
-                        <div class="challenge-card" aria-live="polite">
+                        <div class="prediction-card" aria-live="polite">
                             <span>Model's guess</span>
                             <strong id="prediction">—</strong>
                             <span id="confidence">Confidence: —</span>
@@ -130,11 +127,7 @@
                         >
                             Check my drawing
                         </button>
-                        <button
-                            id="back-button"
-                            class="text-button"
-                            type="button"
-                        >
+                        <button id="back-button" type="button">
                             Back to training
                         </button>
                     </div>

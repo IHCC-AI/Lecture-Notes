@@ -21,6 +21,9 @@ We’ll use ml5.js to build and explore simple machine-learning models. These mo
 
 ## Custom Demo
 
-- [2D Point Classifier](2d_point_classifier_ml5_js.html)
+A 2D point classifier is the Hello World of machine learning.
+So this app doesn't really "do" anything useful, but it does demonstrate the basic ideas of machine learning.
+
+- [2D Point Classifier](2d_point_classifie.html)
 
 ![2D Point Classifier Screenshot](2d-point-classifier-screenshot.png)

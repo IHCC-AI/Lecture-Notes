@@ -31,36 +31,12 @@ git clone https://github.com/IHCC-AI/Lecture-Notes.git
 
 ### LU07 — Automation Tools
 
-<!-- TODO n8n didn't go well, change it to all be web-based or use a different tool -->
+<!-- Postmortem: n8n didn't go well, change it to all be web-based or use a different tool -->
 <!-- n8n removed npm install making it much harder to install -->
 
 ### LU08 — Machine Learning Basics
 
-[Like Code Bullet](https://www.youtube.com/@CodeBullet)
-
-1. What machine learning is
-2. Data, labels, and training examples
-3. Training loop, loss, and model learning
-4. Accuracy, validation, and overfitting
-
-## Inspiration
-
-- [Code Bullet YouTube Channel](https://www.youtube.com/@CodeBullet)
-- [Code Bullet GitHub](https://github.com/Code-Bullet)
-
-## Tech Stack
-
-- [Node.js](https://nodejs.org/en/)
-- [p5.js](https://p5js.org/)
-- [ml5.js](https://ml5js.org/)
-- [Neataptic](https://wagenaartje.github.io/neataptic/)
-- [TensorFlow.js](https://www.tensorflow.org/js)
-
-## Homework
-
-Given a p5.js game implement Neuroevolution to train a neural network to play the game.
-Game can't be: Pong, Flappy Bird, Snake, Tetris, or Breakout.
-Game should be: Pacman
+<!-- Postmortem: Went well, need to improve Pac-Man game -->`
 
 ### LU09 — Machine Vision
 
@@ -70,8 +46,6 @@ Game should be: Pacman
 4. Computer vision project and demo
 
 ### LU10 — AI Scripting
-
-
 
 1. Using AI to generate scripts
     - png to webp conversion

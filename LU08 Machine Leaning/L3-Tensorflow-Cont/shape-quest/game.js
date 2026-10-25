@@ -32,7 +32,6 @@ const sketch = (p) => {
     let classifier;
     let mode = 'training';
     let isTraining = false;
-    let isChecking = false;
 
     const setStatus = (message, kind = 'info') => {
         ui.status.textContent = message;
@@ -97,7 +96,7 @@ const sketch = (p) => {
     };
 
     p.setup = () => {
-        canvas = p.createCanvas(canvasSize, canvasSize);
+        const canvas = p.createCanvas(canvasSize, canvasSize);
         canvas.parent(ui.canvasWrap);
         canvas.elt.setAttribute(
             'aria-label',
@@ -171,31 +170,26 @@ const sketch = (p) => {
         });
         ui.playButton.addEventListener('click', enterPlayMode);
 
-        //Check the users drawing against the model and display the result.
+        // Display the model's prediction and confidence.
         ui.checkButton.addEventListener('click', async () => {
-            if (!classifier || isChecking) {
+            if (!classifier) {
                 return;
             }
 
-            isChecking = true;
             ui.checkButton.disabled = true;
             setStatus('Your model is looking at the drawing...');
 
             try {
                 const result = await classifier.classify(currentDrawing());
                 const guess = result.label;
-                const confidence = Number.isFinite(result.confidence)
-                    ? ` (${Math.round(result.confidence * 100)}% confident)`
-                    : '';
                 ui.prediction.textContent = shapeNames[guess] ?? guess;
                 ui.confidence.textContent = `Confidence: ${Math.round(result.confidence * 100)}%`;
                 setStatus(
-                    `Your model guessed ${shapeNames[guess] ?? guess}${confidence}. Confidence is the model's estimate, not a guarantee.`,
+                    "Prediction complete. Confidence is the model's estimate, not a guarantee.",
                 );
             } catch (error) {
                 setStatus(error.message, 'error');
             } finally {
-                isChecking = false;
                 ui.checkButton.disabled = false;
             }
         });
@@ -205,7 +199,9 @@ const sketch = (p) => {
             clearDrawing();
             ui.playControls.hidden = true;
             ui.trainingControls.hidden = false;
-            setStatus('Add more examples and train again to help your model improve.');
+            setStatus(
+                'Add more examples and train again to help your model improve.',
+            );
         });
 
         ui.playControls.hidden = true;

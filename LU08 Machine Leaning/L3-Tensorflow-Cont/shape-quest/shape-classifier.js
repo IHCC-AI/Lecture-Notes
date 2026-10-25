@@ -13,7 +13,6 @@ class ShapeClassifier {
         this.examples = [];
         this.activeFeatures = [];
         this.isTrained = false;
-        this.network = this.createNetwork();
     }
 
     addExample(strokes, label) {
@@ -22,19 +21,9 @@ class ShapeClassifier {
             throw new Error('Draw a shape before adding an example.');
         }
 
-        this.examples.push({
-            features: Object.values(features),
-            label,
-        });
+        this.examples.push({ features, label });
         this.exampleCounts[label] += 1;
         this.isTrained = false;
-    }
-
-    createNetwork() {
-        return ml5.neuralNetwork({
-            task: 'classification',
-            debug: false,
-        });
     }
 
     async train() {
@@ -53,7 +42,10 @@ class ShapeClassifier {
             );
         }
 
-        this.network = this.createNetwork();
+        this.network = ml5.neuralNetwork({
+            task: 'classification',
+            debug: false,
+        });
         await this.network.ready;
         this.examples.forEach(({ features, label }) => {
             this.network.addData(
@@ -81,8 +73,7 @@ class ShapeClassifier {
             throw new Error('Draw a shape before asking the model to guess.');
         }
 
-        const featureValues = Object.values(features);
-        const inputs = this.activeFeatures.map((index) => featureValues[index]);
+        const inputs = this.activeFeatures.map((index) => features[index]);
         const results = await this.network.classify(inputs);
         if (
             !Array.isArray(results) ||
@@ -167,7 +158,7 @@ class ShapeClassifier {
             }
         }
 
-        const features = {};
+        const features = [];
         const cellSize = bitmapSize / ShapeClassifier.gridSize;
         for (let gridY = 0; gridY < ShapeClassifier.gridSize; gridY += 1) {
             for (let gridX = 0; gridX < ShapeClassifier.gridSize; gridX += 1) {
@@ -184,8 +175,7 @@ class ShapeClassifier {
                     }
                 }
 
-                features[`pixel${gridY * ShapeClassifier.gridSize + gridX}`] =
-                    filled;
+                features.push(filled);
             }
         }
 
