@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Webcam Object Finder</title>
+        <link rel="stylesheet" href="style.css" />
+        <!-- ml5.js 1.4.0 includes objectDetection; the camera does not start here. -->
+        <script
+            defer
+            src="https://unpkg.com/ml5@1.4.0/dist/ml5.min.js"
+        ></script>
+        <script defer src="app.js"></script>
+    </head>
+    <body>
+        <main class="app">
+            <header>
+                <p class="eyebrow">LU09 · Lecture 3</p>
+                <h1>Webcam Object Finder</h1>
+                <p>
+                    Detect objects in live video. The camera starts only when
+                    you choose to turn it on.
+                </p>
+            </header>
+
+            <section class="panel">
+                <div class="actions">
+                    <button id="start-button" type="button" disabled>
+                        Start camera
+                    </button>
+                    <button id="stop-button" type="button" disabled>
+                        Stop camera
+                    </button>
+                </div>
+                <p id="status" role="status" aria-live="polite">
+                    Loading ml5.js…
+                </p>
+                <div id="video-frame" class="video-frame" hidden>
+                    <video id="video" playsinline muted></video>
+                    <canvas id="overlay" aria-hidden="true"></canvas>
+                </div>
+                <p id="detections" aria-live="polite"></p>
+                <p class="privacy-note">
+                    The camera feed is processed in this browser. Choose Stop
+                    camera to end the stream.
+                </p>
+            </section>
+        </main>
+    </body>
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Image Explorer</title>
+        <link rel="stylesheet" href="style.css" />
+        <!-- This downloads the ml5.js library from unpkg when the page loads. -->
+        <script
+            defer
+            src="https://unpkg.com/ml5@1.4.0/dist/ml5.min.js"
+        ></script>
+        <script defer src="app.js"></script>
+    </head>
+    <body>
+        <main class="app">
+            <header>
+                <h1>Image Explorer</h1>
+                <p>
+                    Compare whole-image classification with object detection
+                    on an image you choose.
+                </p>
+            </header>
+
+            <section class="panel">
+                <h2>Choose a photo</h2>
+                <label for="image-input">Upload an image</label>
+                <input id="image-input" type="file" accept="image/*" />
+                <div id="image-frame" class="image-frame">
+                    <img id="preview" alt="Selected image" hidden />
+                    <canvas id="overlay" aria-hidden="true"></canvas>
+                    <p id="empty-preview">Your selected image appears here.</p>
+                </div>
+                <div class="actions">
+                    <button id="classify-button" type="button" disabled>
+                        Classify image
+                    </button>
+                    <button id="detect-button" type="button" disabled>
+                        Detect objects
+                    </button>
+                </div>
+                <p id="status" role="status" aria-live="polite">
+                    Load an image to get started.
+                </p>
+            </section>
+
+            <section class="panel">
+                <h2>Classification results</h2>
+                <ol id="classification-results"></ol>
+            </section>
+            <section class="panel">
+                <h2>Detected objects</h2>
+                <ul id="detection-results"></ul>
+            </section>
+        </main>
+    </body>
+</html>

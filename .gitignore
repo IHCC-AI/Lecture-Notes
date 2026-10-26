@@ -1,2 +1,8 @@
 /old
 /.vscode
+
+# Ignore all subdirectories named "node_modules"
+/node_modules
+
+# Ignore all .zip files
+*.zip
