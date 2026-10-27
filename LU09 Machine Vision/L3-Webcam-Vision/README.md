@@ -5,6 +5,9 @@ If this lecture go ahead to L3, and L4 will be a lab day.
 
 ## Coding example: Webcam Object Finder
 
+Turn off Zoom camera so that your webcam can be used by the browser.
+Most systems will only allow one application to use the webcam at a time.
+
 - [Example](./example/index.html)
 
 > Project only works on "localhost" or "https" due to browser security restrictions.
